@@ -1,0 +1,47 @@
+<ion-view cache-view="false" view-title="Online Mandi">
+    <ion-content>
+        <ion-slide-box show-pager="true"  class="index-slider-main" on-slide-changed="slideHasChanged($index)">
+            <ion-slide>
+                <div class="index-slide">
+                    <img src="img/slide1.jpg">
+                </div>
+            </ion-slide>
+            <ion-slide>
+                <div class="index-slide">
+                    <img src="img/slide2.jpg">
+                </div>
+            </ion-slide>
+        </ion-slide-box>
+        <div class="list">
+            <span class="item item-icon-left item-icon-right">
+                <i class="icon ion-location"></i>
+                {{currentcity.name}}
+                <i class="icon ion-edit" ng-click="showCityChangeAlert()"></i>
+            </span>
+        </div>
+        <div class="item heading h2 item-button-right">
+            fresh Fruits<button class="button button-assertive" ng-click="viewallfruits()">View All</button>
+        </div>
+
+        <ion-list  ng-show="products_got" class="pro-list">
+            <ion-item ng-repeat="fruit in fruits">
+                    <img src="img/products/{{fruit.img}}" fallback-src="http://beta.onlinemandi.com/uploads/products/medium/{{fruit.img}}">
+                    <h3>{{fruit.name}}</h3>
+                    <p>Grade A<span>Rs.{{fruit.rate_a}}</span></p>
+                    <p>Grade B<span>Rs.{{fruit.rate_b}}</span></p>
+            </ion-item>
+        </ion-list>
+
+        <div class="item heading h2 item-button-right">
+            fresh Vegetables<button class="button button-assertive">View All</button>
+        </div>
+        <ion-list  ng-show="products_got" class="pro-list">
+            <ion-item ng-repeat="vegetable in vegetables">
+                    <img src="img/products/{{vegetable.img}}" fallback-src="http://beta.onlinemandi.com/uploads/products/medium/{{fruit.img}}">
+                    <h3>{{vegetable.name}}</h3>
+                    <p>Grade A<span>Rs.{{vegetable.rate_a}}</span></p>
+                    <p>Grade B<span>Rs.{{vegetable.rate_b}}</span></p>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-view>

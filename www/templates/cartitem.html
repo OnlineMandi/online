@@ -1,0 +1,26 @@
+<div class="item item-thumbnail-left" ng-class="{0:'', 1:'toggly'}[status]">
+    <img ng-src="img/products/{{item.item.img}}" fallback-src="http://beta.onlinemandi.com/uploads/products/thumbs/{{item.item.img}}">
+    <h2>{{item.name}}</h2>
+    <p>Grade : <span>{{item.grade.name}}</span></p>
+    <p>Quantity : <span>{{item.weight.name}}</span></p>
+    <i class="ion-ios-trash" ng-click="deleteitem()"></i>
+    <i class="ion-edit"  ng-click="show()"></i>
+    <span class="price">{{item.price | currency : 'Rs.' : 2}}</span>
+    <div class="bg-box">
+        <label class="item item-input item-select item-custom-select">
+            <div class="input-label">
+                Grade
+            </div>
+            <select ng-model="item.grade.value"  ng-options="obj.value as obj.name for obj in item.grades">
+            </select>
+        </label>
+        <label class="item item-input item-select item-custom-select">
+            <div class="input-label">
+                Qty
+            </div>
+            <select ng-model="item.weightid" id="weight" ng-options="obj.value as obj.name for obj in item.item.weights">
+            </select>
+        </label>
+        <button id="aa" class="button button-small" ng-class="buttonClass" ng-click="updateCart()">Update</button>
+    </div>
+</div>

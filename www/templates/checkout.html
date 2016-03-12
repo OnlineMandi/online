@@ -1,0 +1,49 @@
+<ion-view view-title="Checkout">
+    <ion-content class="padding checkout">
+        <h3 class="upper-heading">Address Details</h3>
+        <div class="list drom-item bg-wt orders detail ct">
+            <div class="row">
+                <div class="col-100">
+                    <p class="brown">Name :<span ng-bind="details.fname+' '+details.lname"></span></p>
+                    <p class="brown">Address :<span ng-bind="details.location"></span></p>
+                    <p class="brown">Area :<span ng-bind="details.area"></span></p>
+                    <p class="brown">City :<span ng-bind="details.city"></span></p>
+                    <p class="brown">Contact No(s) :<span ng-bind="details.contact1+', '+details.contact2"></span></p>
+                </div>
+            </div>
+        </div>
+        <h3 class="upper-heading">Order Details</h3>
+        <div class="list shadow drom-item bg-wt">
+            <div class="row">
+                <div class="col">
+                    <p class="gray">Sub Total</p>
+                    <p class="gray">Handling Charges</p>
+                    <p class="black">Total</p>
+                </div>
+                <div class="col col-45">
+                    <p class="brown">{{cartDetails.total | currency : 'Rs.' : 2}}</p>
+                    <p class="green">{{cartDetails.ship | currency : 'Rs.' : 2}}</p>
+                    <p class="black">{{cartDetails.gtotal | currency : 'Rs.' : 2}}</p>
+                </div>
+            </div>
+        </div>
+        <h3 class="upper-heading">Payment Method</h3>
+        <div class="list shadow drom-item bg-wt">
+
+                <ion-list>
+                    <ion-radio ng-model="choice" ng-value="'A'">Cash On Delivery</ion-radio>
+                    <ion-radio ng-model="choice" ng-value="'B'">Wallet</ion-radio>
+                </ion-list>
+
+        </div>
+        <div class="row">
+            <div class="col-33">
+                <a class="button  button-assertive" ng-click="gotoCart()">Go to Cart</a>
+            </div>
+            <div class="col-33"></div>
+            <div class="col-33">
+                <a class="button button-balanced" ng-click="checkout()">Place Order</a>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

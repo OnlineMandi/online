@@ -1,0 +1,24 @@
+<ion-modal-view>
+    <ion-pane ng-show="msgtype">
+        <ion-header-bar>
+            <h1 class="title">Welcome User</h1>
+            <div class="buttons">
+                <button class="button button-assertive" ng-click="hide()">Close</button>
+            </div>
+        </ion-header-bar>
+        <ion-content>
+           <p>Welcome to onlinemandi.com. Our customer care executive will soon contact you</p>
+        </ion-content>
+    </ion-pane>
+    <ion-pane ng-show="!msgtype">
+        <ion-header-bar>
+            <h1 class="title">Welcome User</h1>
+            <div class="buttons">
+                <button class="button button-assertive" ng-click="hide()">Close</button>
+            </div>
+        </ion-header-bar>
+        <ion-content>
+            <p>Welcome to onlinemandi.com. Currently service is not available in your city</p>
+        </ion-content>
+    </ion-pane>
+</ion-modal-view>

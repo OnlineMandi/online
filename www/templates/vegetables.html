@@ -1,0 +1,38 @@
+<div class="tabs-striped tabs-color-assertive tabs-top">
+    <div class="tabs">
+        <a class="tab-item" ng-class="{active : viewAll}" ng-click="viewall()">
+            All
+        </a>
+        <a class="tab-item"  ng-class="{active : viewFavourite}" ng-click="viewfavourite()">
+            Favorites
+        </a>
+        <a class="tab-item" ng-class="{active : viewBestSelling}" ng-click="viewbestselling()">
+            Best Selling
+        </a>
+    </div>
+</div>
+<ion-view view-title="Fresh Vegetables">
+    <ion-content class="custom-top">
+        <ion-list class="pro-list full-width" ng-show="viewAll">
+            <ion-item ng-repeat="vegetable in vegetables">
+                <product product-attr="vegetable"></product>
+            </ion-item>
+        </ion-list>
+        <ion-list class="pro-list full-width" ng-show="viewFavourite">
+            <div ng-show="notLoggedIn" class="card">
+                <div class="item item-text-wrap">
+                    You must be logged in to get your favourite vegetables list
+                </div>
+            </div>
+            <ion-item ng-repeat="vegetable in favouritevegetables" ng-hide="notLoggedIn">
+                <product product-attr="vegetable"></product>
+            </ion-item>
+        </ion-list>
+        <ion-list class="pro-list full-width" ng-show="viewBestSelling">
+            <ion-item ng-repeat="vegetable in bestsellingvegetables">
+                <product product-attr="vegetable"></product>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-view>
+

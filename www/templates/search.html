@@ -1,0 +1,24 @@
+<ion-view view-title="Search">
+  <ion-content>
+
+	  <div class="list card">
+
+		  <div class="item item-avatar">
+			  <input type="file" id="fileInput" />
+		  </div>
+
+		  <div class="item item-image">
+			  <div class="cropArea">
+				  <img-crop image="myImage" area-type="circle" chargement="'Loading'" result-image="myCroppedImage"></img-crop>
+			  </div>
+		  </div>
+			<div class="item">
+				<button class="assertive" ng-click="usecropped(myCroppedImage)">Crop</button>
+			</div>
+          <a class="item item-icon-left assertive" href="#">
+              <div>Cropped Image:</div>
+              <div><img ng-src="{{myCroppedImage}}" /></div>
+          </a>
+	  </div>
+  </ion-content>
+</ion-view>

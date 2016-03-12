@@ -1,0 +1,33 @@
+<h4>Grade A</h4>
+<div ng-hide="popupfruit.rates_a !=undefined" class="slideable_content">
+    <div class="row">
+        No Offers Availale
+    </div>
+</div>
+<div ng-show="popupfruit.rates_a !=undefined" class="slideable_content">
+    <div class="row">
+        <div class="col text-left">	Quantity</div>
+        <div class="col text-right">Rate</div>
+    </div>
+    <div ng-repeat="rates in popupfruit.rates_a" class="row">
+        <div class="col text-left">{{rates.name}}</div>
+        <div class="col text-right">{{rates.value}}</div>
+    </div>
+</div>
+<h4>Grade B</h4>
+<div ng-hide="popupfruit.rates_b !=undefined" class="slideable_content">
+    <div class="row">
+        No Offers Availale
+    </div>
+</div>
+<div ng-show="popupfruit.rates_b !=undefined" class="slideable_content">
+    <div class="row">
+        <div class="col text-left">	Quantity</div>
+        <div class="col text-right">Rate</div>
+    </div>
+    <div ng-repeat="rates in popupfruit.rates_b" class="row">
+        <div class="col text-left">{{rates.name}}</div>
+        <div class="col text-right">{{rates.value}}</div>
+    </div>
+</div>
+</div>

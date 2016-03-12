@@ -1,0 +1,130 @@
+<ion-modal-view>
+	<div class="tabs-striped tabs-background-assertive tabs-color-light">
+		<div class="tabs">
+			<a class="tab-item" ng-class="{active : viewLogin}"	href="javascript:" ng-click="switchTab('login')">
+				<i class="icon ion-locked"></i> Login
+			</a>
+			<a class="tab-item" ng-class="{active : !viewLogin}" href="javascript:" ng-click="switchTab('register')">
+				<i class="icon ion-person-add"></i> Register
+			</a>
+		</div>
+	</div>
+	<!-- login pane -->
+	<ion-pane ng-show="viewLogin">
+		<ion-header-bar>
+			<h1 class="title">Login</h1>
+			<div class="buttons">
+				<button class="button button-assertive" ng-click="hide()">Close</button>
+			</div>
+		</ion-header-bar>
+		<ion-content>
+			<form>
+				<div class="list">
+					<label class="item item-input">
+						<span class="input-label">Email</span>
+						<input ng-change="clearerror()" type="text" ng-model="user.username">
+					</label>
+					<label class="item item-input">
+						<span class="input-label">Password</span>
+						<input ng-change="clearerror()" type="password" ng-model="user.password">
+					</label>
+					<label class="item" ng-show="errormsg">
+						Incorrect username or password
+					</label>
+					<label class="item">
+						<button class="button button-block button-assertive" ng-click="login()" ng-disabled="!user.username ||	!user.password" type="submit">Log in</button>
+					</label>
+				</div>
+			</form>
+		</ion-content>
+	</ion-pane>
+	<!-- register pane -->
+	<ion-pane ng-hide="viewLogin">
+		<ion-header-bar>
+			<h1 class="title">Register</h1>
+			<div class="buttons">
+				<button class="button button-assertive" ng-click="hide()">Close</button>
+			</div>
+		</ion-header-bar>
+		<ion-content>
+			<form>
+				<div class="list">
+					<label class="item item-input">
+						<span class="input-label">First Name</span>
+						<input type="text" ng-model="newuser.fname">
+					</label>
+					<label class="item item-input">
+						<span class="input-label">Last Name</span>
+						<input type="text" ng-model="newuser.lname">
+					</label>
+					<label class="item item-input">
+						<span class="input-label">Email	Address</span>
+						<input type="text" ng-model="newuser.email">
+					</label>
+					<label class="item item-input">
+						<span class="input-label">Mobile No.</span>
+						<input type="tel" ng-model="newuser.contact" ng-pattern="/\d{10}$/" ng-minlength="10 "ng-maxlength="11">
+					</label>
+                  <label class="item item-input item-select">
+                    <div class="input-label">
+                      State
+                    </div>
+                    <select name="state" ng-model="newuser.state" ng-change="getCities(newuser.state)">
+                      <option value="">Select State</option>
+                      <option value="1">Andaman Nicobar Islands</option>
+                      <option value="2">Andhra Pradesh</option>
+                      <option value="3">Arunachal Pradesh</option>
+                      <option value="4">Assam</option>
+                      <option value="5">Bihar</option>
+                      <option value="6">Chandigarh</option>
+                      <option value="7">Chhattisgarh</option>
+                      <option value="8">Dadra Nagar Haveli</option>
+                      <option value="9">Daman Diu</option>
+                      <option value="10">Delhi</option>
+                      <option value="11">Goa</option>
+                      <option value="12">Gujarat</option>
+                      <option value="13">Haryana</option>
+                      <option value="14">Himachal Pradesh</option>
+                      <option value="15">Jammu Kashmir</option>
+                      <option value="16">Jharkhand</option>
+                      <option value="17">Karnataka</option>
+                      <option value="18">Kerala</option>
+                      <option value="19">Lakshadweep</option>
+                      <option value="20">Madhya Pradesh</option>
+                      <option value="21">Maharashtra</option>
+                      <option value="22">Manipur</option>
+                      <option value="23">Meghalaya</option>
+                      <option value="24">Mizoram</option>
+                      <option value="25">Nagaland</option>
+                      <option value="26">Odisha</option>
+                      <option value="27">Pondicherry</option>
+                      <option value="28">Punjab</option>
+                      <option value="29">Rajasthan</option>
+                      <option value="30">Sikkim</option>
+                      <option value="31">Tamil Nadu</option>
+                      <option value="32">Telangana</option>
+                      <option value="33">Tripura</option>
+                      <option value="34">Uttar Pradesh</option>
+                      <option value="35">Uttarakhand</option>
+                      <option value="36">West Bengal</option>
+                    </select>
+                  </label>
+                  <label class="item item-input item-select">
+                      <div class="input-label">
+                            City
+                        </div>
+                      <select  ng-model="newuser.city">
+                        <option value="">Select City</option>
+                          <option ng-repeat="city in cities" value="{{city.value}}">
+                              {{city.title}}
+                          </option>
+                    </select>
+                  </label>
+					<label class="item">
+						<button class="button button-block button-assertive" ng-click="register()" ng-disabled="!newuser.fname || !newuser.email || !newuser.contact || !newuser.city" type="submit" type="submit">Register</button>
+					</label>
+				</div>
+			</form>
+		</ion-content>
+	</ion-pane>
+</ion-modal-view>

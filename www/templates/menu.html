@@ -1,0 +1,59 @@
+<ion-side-menus enable-menu-with-back-views="false">
+  <ion-side-menu-content>
+    <ion-nav-bar class="bar-assertive">
+      <ion-nav-back-button>
+      </ion-nav-back-button>
+
+      <ion-nav-buttons side="left">
+        <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
+        </button>
+      </ion-nav-buttons>
+    </ion-nav-bar>
+    <ion-nav-view name="menuContent"></ion-nav-view>
+  </ion-side-menu-content>
+
+  <ion-side-menu side="left" class="menu-animated">
+
+    <ion-content>
+      <div class="left-hading-box">
+        <button class="button button-icon button-clear ion-gear-b" ng-click="settings()"></button><BR>
+        <div class="user-ac-pic">
+          <img src="img/profile_user.jpg">
+        </div>
+        <ion-item menu-close ng-click="loginFromMenu()" ng-hide="isAuthenticated" class="user-ac-login">
+          Login/Sing up
+        </ion-item>
+        <ion-item menu-close ng-click="logout()" ng-show="isAuthenticated" class="user-ac-login">
+          Logout
+        </ion-item>
+
+      </div>
+      <ion-list class="left-bar-list">
+        <ion-item menu-close href="#/app/home">
+          Home<i class="icon ion-chevron-right"></i>
+        </ion-item>
+        <ion-item menu-close href="#/app/fruits">
+          Fruits<i class="icon ion-chevron-right"></i>
+        </ion-item>
+        <ion-item menu-close href="#/app/vegetables">
+          Vegetables<i class="icon ion-chevron-right"></i>
+        </ion-item>
+        <ion-item menu-close href="#/app/cart" ng-show="isAuthenticated">
+          Cart<i class="icon ion-chevron-right"></i>
+        </ion-item>
+        <ion-item menu-close href="#/app/account" ng-show="isAuthenticated">
+          My Account<i class="icon ion-chevron-right"></i>
+        </ion-item>
+        <ion-item menu-close href="#/app/cart">
+          Search<i class="icon ion-chevron-right"></i>
+        </ion-item>
+        <ion-item menu-close href="#/app/takepic">
+          Search<i class="icon ion-chevron-right"></i>
+        </ion-item>
+        <ion-item menu-close href="#/app/test">
+          Test<i class="icon ion-chevron-right"></i>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-side-menu>
+</ion-side-menus>

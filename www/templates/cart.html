@@ -1,0 +1,59 @@
+<ion-view view-title="Cart">
+	<ion-content class="padding">
+	
+	
+	<ion-list  ng-show="cartTotal" class="list shadow cart-item">
+		<div ng-repeat="item in cart">
+		    <cartitem status-attr="status" update-cart-attr="updateCartTotal()"  delete-attr="delete(item)" update-attr="inactivateStatus()" cartitem-attr="item"></cartitem>
+		</div>
+	</ion-list>
+	<!--div class="list shadow drom-item">
+		<a class="item item-icon-left item-icon-right" href="#">
+			<i class="icon ion-pricetag"></i>
+			Check mail
+			<i class="icon ion-ios-arrow-down"></i>
+		</a>
+	</div>
+	<div class="list shadow drom-item">
+		<a class="item item-icon-left item-icon-right" href="#">
+			<i class="icon ion-gift"></i>
+			Gift Wrap Order
+			<i class="icon ion-ios-arrow-down"></i>
+		</a>
+	</div-->
+	<div ng-show="cartTotal" class="list shadow drom-item bg-wt">
+		<div class="row">
+			<div class="col">
+				<p class="gray">Sub Total</p>
+				<p class="gray">Shipping Charges</p>
+				<p class="black">Total</p>
+			</div>
+			<div class="col col-45">
+				<p class="brown">{{cartTotal | currency : 'Rs.' : 2}}</p>
+				<p class="green">{{shipping | currency : 'Rs.' : 2}}</p>
+				<p class="black">{{grandTotal | currency : 'Rs.' : 2}}</p>
+			</div>
+		</div>
+	</div>
+		<div ng-hide="cartTotal" class="card">
+			<div class="item item-text-wrap">
+				Your cart is empty
+			</div>
+		</div>
+		<div  ng-show="cartTotal" class="row">
+			<div class="col-33">
+				<a class="button  button-assertive" ng-click="emptycart()">Empty Cart</a>
+			</div>
+			<div class="col-33"></div>
+			<div class="col-33">
+				<a class="button button-balanced button-right" ng-click="checkout()">Checkout</a>
+			</div>
+
+
+		</div>
+		<div  ng-hide="cartTotal" class="button-bar bar-positive">
+			<a class="button  button-assertive" ng-click="shopping()">Start Shopping</a>
+		</div>
+	</ion-content>
+
+</ion-view>

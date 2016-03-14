@@ -60,7 +60,6 @@ function($rootScope, $state, $window, $ionicModal, $ionicHistory, $ionicPopup, A
 				Loader.showLoading('Authenticating...');
 				UserFactory.login($scope.user).success(function(data) {
 					Loader.hideLoading();
-                    AuthFactory.setCurrentTime(0);
                     AuthFactory.resetProductStatus(0);
                     AuthFactory.setUser(data.username);
                     AuthFactory.setDetails(data.details);
@@ -280,18 +279,13 @@ function($rootScope, $state, $window, $ionicModal, $ionicHistory, $ionicPopup, A
             });
         };
         ProductsFactory.fruits($scope.totalitems).success(function(data) {
-            AuthFactory.setCurrentTime(data.date);
             if(data.update==1){
-                if(data.updateall==1){
-                    AuthFactory.resetProductStatus(0);
-                }
-                AuthFactory.setProductStatus('fruits',1);
-                AuthFactory.setProductStatus('favouritefruits',1);
+                AuthFactory.setProductStatus('fruits',data.updateKey);
+                AuthFactory.setProductStatus('favouritefruits',data.updateKey);
                 $scope.data = data;
                 $scope.fruits = data.fruits;
                 ProductsFactory.setProducts('allfruits',data.fruits);
                 ProductsFactory.setProducts('allfavouritefruits',data.fav);
-                $scope.totalitems = $scope.data.totalitems;
                 Loader.hideLoading();
             } else {
                 $scope.fruits = ProductsFactory.getProducts('allfruits');
@@ -310,12 +304,10 @@ function($rootScope, $state, $window, $ionicModal, $ionicHistory, $ionicPopup, A
             } else {
                 $scope.viewFavourite = true;
                 if($rootScope.isAuthenticated){
-                    if(!$scope.gotfavourite){
                         Loader.showLoading('Loading.....');
                         ProductsFactory.favouritefruits( $scope.totalfavouriteitems).success(function(data) {
-                            AuthFactory.setCurrentTime(data.date);
                             if(data.update==1) {
-                                AuthFactory.setProductStatus('favouritefruits',1);
+                                AuthFactory.setProductStatus('favouritefruits',data.updateKey);
                                 $scope.favouritefruits = [];
                                 for(var j=0; j<data.fruits.length; j++){
                                     if($scope.fruits[data.fruits[j]] !== undefined){
@@ -341,8 +333,6 @@ function($rootScope, $state, $window, $ionicModal, $ionicHistory, $ionicPopup, A
                             Loader.hideLoading();
                             Loader.toggleLoadingWithMessage(err.message);
                         });
-                    }
-
                 } else {
                     $scope.notLoggedIn = true;
                     return;

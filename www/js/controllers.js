@@ -301,6 +301,7 @@ function($rootScope, $state, $window, $ionicModal, $ionicHistory, $ionicPopup, A
             $scope.viewBestSelling = false;
             if($scope.viewFavourite){
                 return;
+
             } else {
                 $scope.viewFavourite = true;
                 if($rootScope.isAuthenticated){

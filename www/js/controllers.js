@@ -275,7 +275,6 @@ function($rootScope, $state, $window, $ionicModal, $ionicHistory, $ionicPopup, A
                 ProductsFactory.setProducts('allfavouritefruits',data.fav);
                 ProductsFactory.setProducts('allbestsellingfruits',data.topselling);
                 Loader.hideLoading();
-
             } else {
                 $scope.fruits = ProductsFactory.getProducts('allfruits');
                 Loader.hideLoading();

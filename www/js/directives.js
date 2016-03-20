@@ -88,7 +88,6 @@ angular.module('Onlinemandi.directives', [])
                         scope:scope
                     });
                     alertPopup.then(function(res) {
-                        console.log('Thank you for not eating my delicious ice cream cone');
                     });
                 };
                 scope.$on('showLoginModalProduct', function($event, scope, cancelCallback, callback) {

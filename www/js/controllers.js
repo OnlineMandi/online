@@ -263,6 +263,7 @@ function($rootScope, $state, $window, $ionicModal, $ionicHistory, $ionicPopup, A
         $scope.viewBestSelling = false;
         $scope.totalitems = null;
         $scope.totalfavouriteitems = null;
+        /*getting fruits data from server*/
         ProductsFactory.fruits($scope.totalitems).success(function(data) {
             if(data.update==1){
                 AuthFactory.setProductStatus('fruits',data.updateKey);

@@ -256,7 +256,7 @@ function($rootScope, $state, $window, $ionicModal, $ionicHistory, $ionicPopup, A
             });
 		};
 }])
-    .controller('FruitsCtrl', ['$rootScope', '$ionicPopover', '$ionicScrollDelegate', '$scope', '$ionicPopup', 'Loader', 'AuthFactory', 'UserFactory', 'ProductsFactory',function($rootScope, $ionicPopover, $ionicScrollDelegate, $scope, $ionicPopup, Loader, AuthFactory, UserFactory, ProductsFactory) {
+    .controller('FruitsCtrl', ['$rootScope', '$ionicPopover', '$ionicScrollDelegate', '$scope', '$ionicPopup', 'Loader', 'AuthFactory', 'UserFactory', 'ProductsFactory', 'WeightFactory',function($rootScope, $ionicPopover, $ionicScrollDelegate, $scope, $ionicPopup, Loader, AuthFactory, UserFactory, ProductsFactory, WeightFactory) {
         Loader.showLoading('Loading....');
         $scope.viewAll = true;
         $scope.viewFavourite = false;
@@ -270,6 +270,95 @@ function($rootScope, $state, $window, $ionicModal, $ionicHistory, $ionicPopup, A
                 AuthFactory.setProductStatus('favouritefruits',data.updateKey);
                 AuthFactory.setProductStatus('topsellingfruits',data.updateKey);
                 $scope.data = data;
+
+                $scope.fruits = data.fruits;
+                ProductsFactory.setProducts('allfruits',data.fruits);
+                ProductsFactory.setProducts('allfavouritefruits',data.fav);
+                ProductsFactory.setProducts('allbestsellingfruits',data.topselling);
+                Loader.hideLoading();
+
+            } else {
+                $scope.fruits = ProductsFactory.getProducts('allfruits');
+                Loader.hideLoading();
+            }
+        }).error(function(err, statusCode) {
+            Loader.hideLoading();
+            Loader.toggleLoadingWithMessage(err.message);
+        });
+        $scope.viewfavourite = function(){
+            $ionicScrollDelegate.scrollTop();
+            $scope.viewAll = false;
+            $scope.viewBestSelling = false;
+            if($scope.viewFavourite){
+                return;
+
+            } else {
+                $scope.viewFavourite = true;
+                if($rootScope.isAuthenticated){
+                    Loader.showLoading('Loading.....');
+                    $scope.favouritefruits = [];
+                    var fav_fruits = ProductsFactory.getProducts('allfavouritefruits');
+                    for(var j=0; j<fav_fruits.length; j++){
+                        if($scope.fruits[fav_fruits[j]] !== undefined) {
+                            $scope.favouritefruits.push($scope.fruits[fav_fruits[j]]);
+                        }
+                    }
+                    Loader.hideLoading();
+                } else {
+                    $scope.notLoggedIn = true;
+                    return;
+                }
+            }
+        };
+        $scope.viewbestselling = function(){
+            $ionicScrollDelegate.scrollTop();
+            $scope.viewAll = false;
+            $scope.viewFavourite = false;
+            if($scope.viewBestSelling){
+                return;
+            } else {
+                $scope.viewBestSelling = true;
+                Loader.showLoading('Loading.....');
+                $scope.bestsellingfruits = [];
+                var best_fruits = ProductsFactory.getProducts('allbestsellingfruits');
+                for(var j=0; j<best_fruits.length; j++){
+                    if($scope.fruits[best_fruits[j]] !== undefined) {
+                        $scope.bestsellingfruits.push($scope.fruits[best_fruits[j]]);
+                    }
+                }
+                Loader.hideLoading();
+            }
+        };
+        $scope.viewall = function(){
+            $ionicScrollDelegate.scrollTop();
+            $scope.viewFavourite = false;
+            $scope.viewBestSelling = false;
+            if($scope.viewAll){
+                return;
+            } else {
+                $scope.viewAll = true;
+                return;
+            }
+        };
+
+    }])
+    .controller('TestfruitsCtrl', ['$rootScope', '$ionicPopover', '$ionicScrollDelegate', '$scope', '$ionicPopup', 'Loader', 'AuthFactory', 'UserFactory', 'ProductsFactory', 'WeightFactory',function($rootScope, $ionicPopover, $ionicScrollDelegate, $scope, $ionicPopup, Loader, AuthFactory, UserFactory, ProductsFactory, WeightFactory) {
+        Loader.showLoading('Loading....');
+        $scope.viewAll = true;
+        $scope.viewFavourite = false;
+        $scope.viewBestSelling = false;
+        $scope.totalitems = null;
+        $scope.totalfavouriteitems = null;
+        /*getting fruits data from server*/
+        ProductsFactory.testfruits($scope.totalitems).success(function(data) {
+            if(data.update==1){
+                AuthFactory.setProductStatus('fruits',data.updateKey);
+                AuthFactory.setProductStatus('favouritefruits',data.updateKey);
+                AuthFactory.setProductStatus('topsellingfruits',data.updateKey);
+                $scope.data = data;
+                for (var index in data.fruits) {
+                    data.fruits[index].weights = WeightFactory.getWeights(data.fruits[index]);
+                }
                 $scope.fruits = data.fruits;
                 ProductsFactory.setProducts('allfruits',data.fruits);
                 ProductsFactory.setProducts('allfavouritefruits',data.fav);

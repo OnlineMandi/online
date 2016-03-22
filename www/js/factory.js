@@ -154,14 +154,6 @@ function($ionicLoading, $timeout) {
 				return $http.get(base + '/fruits/guest-fruits?city=' + city.id + '&status=' + AuthFactory.getProductStatus('fruits'));
 			}
 	},
-    testfruits:function(totalitems){
-            if ($rootScope.isAuthenticated){
-                return $http.get(base + '/fruits/index1?status=' + AuthFactory.getProductStatus('testfruits'));
-            } else {
-                var city = UserFactory.getCity();
-                return $http.get(base + '/fruits/guest-fruits1?city=' + city.id + '&status=' + AuthFactory.getProductStatus('testfruits'));
-            }
-    },
 	favouritefruits:function(totalitems){
 			return $http.get(base + '/fruits/favourite-fruits?totalitems=' +totalitems + '&status=' + AuthFactory.getProductStatus('favouritefruits'));
 	},
@@ -231,6 +223,45 @@ function($ionicLoading, $timeout) {
 var units = {"1":{"id": 1,"name": "Gram","sname": "gm","status": 1}, "2":{"id": 2,"name": "Kilogram","sname": "kg","status": 1}, "3":{"id": 3,"name": "Dozen","sname": "dz","status": 1}, "4":{"id": 4,"name": "Piece","sname": "pcs","status": 1}};
 
         return {
+			getOffers: function(product,grade) {
+                var rates = [];
+                var weight;
+                var product_unit;
+                var count = 0;
+                if(grade==0){
+                    var current_offer = product.rates_a;
+                } else {
+                    var current_offer = product.rates_b;
+                }
+                for (var prop in current_offer) {
+                    if (current_offer.hasOwnProperty(prop))
+                        ++count;
+                }
+                if(count>1){
+                var i = 0;
+                for (var index in current_offer) {
+                    if (!current_offer.hasOwnProperty(index)) {
+                        continue;
+                    } else {
+                        weight = allweights[index];
+                        product_unit = units[weight.unit_id];
+                        var val = weight.name;
+                        var unit = product_unit.sname;
+                        if (i == 0) {
+                            i++;
+                            continue;
+                        }
+                        else if(count - i == 1) {
+                            rates.push({'name': val + unit + ' or above', 'value': current_offer[index] + "/" + unit});
+                        } else {
+                            rates.push({'name':  'min ' + val + unit, 'value': current_offer[index] + "/" + unit});
+                        }
+                    }
+                    i++;
+                }
+            }
+            return rates;
+			},
             getWeights: function (product) {
                 var weights = [];
                 var weight;
@@ -239,7 +270,7 @@ var units = {"1":{"id": 1,"name": "Gram","sname": "gm","status": 1}, "2":{"id": 
                     if(product.rate_a){
                         var price_a = weight.multiplier*product.rate_a;
                         if(product.rates_a!=undefined){
-                            for (var index in product.rates_a) {
+                            for(var index in product.rates_a) {
                                 if (!product.rates_a.hasOwnProperty(index)) {
                                     continue;
                                 } else {
@@ -277,24 +308,6 @@ var units = {"1":{"id": 1,"name": "Gram","sname": "gm","status": 1}, "2":{"id": 
                 }
                 return weights;
             },
-
-           /* foreach($weights as $weight){
-            $query = Weight::findOne(['id'=>$weight]);
-            $item['weights'][] = array('name' => $query->name.$query->unit->sname, 'value' => $query->id, 'p' => CartItems::getCartItemTotal_app($product->product->id, $query->id));
-            if($product->productInCart){
-                if($query->id==$product->productInCart->quantity){
-                    $item['selectedgrade'] = $product->productInCart->grade;
-                    $item['selectedweight'] = $query->id;
-                }
-            } else {
-                if($query->id==$product->product->defaultweight){
-                    $item['selectedweight'] = $query->id;
-                }
-            }
-        }*/
-
-
-
     };
 	}])
 .factory('UserFactory', ['$http', 'AuthFactory', 'LSFactory', function($http, AuthFactory, LSFactory) {

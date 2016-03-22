@@ -114,16 +114,6 @@ angular.module('Onlinemandi', ['ionic', 'ngCordova', 'Onlinemandi.controllers', 
           }
         }
       })
-      .state('app.testfruits', {
-        url: '/testfruits',
-        cache: false,
-        views: {
-          'menuContent': {
-            templateUrl: 'templates/testfruits.html',
-            controller: 'TestfruitsCtrl'
-          }
-        }
-      })
       .state('app.vegetables', {
           url: '/vegetables',
           cache: false,

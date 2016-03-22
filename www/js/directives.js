@@ -240,7 +240,7 @@ angular.module('Onlinemandi.directives', [])
         }
 
     })
-    .directive('product', function($filter, $ionicPopup, $ionicModal, $state, $rootScope, UserFactory, AuthFactory, CartFactory, ProductsFactory, Loader) {
+    .directive('product', function($filter, $ionicPopup, $ionicModal, $state, $rootScope, UserFactory, AuthFactory, CartFactory, ProductsFactory, Loader, WeightFactory) {
         return {
             restrict: 'E',
             scope: {
@@ -310,8 +310,10 @@ angular.module('Onlinemandi.directives', [])
                 scope.clearMessage = function() {
                     scope.message = '';
                 }
-                scope.showOffers = function(fruit) {
-                    scope.popupfruit = fruit;
+                scope.showOffers = function(product) {
+                    scope.popupfruit = product;
+                    scope.rates_a = WeightFactory.getOffers(product,0);
+                    scope.rates_b = WeightFactory.getOffers(product,1);
                     var alertPopup = $ionicPopup.alert({
                         title: "Offers on " + scope.popupfruit.name,
                         templateUrl: 'templates/offers.html',

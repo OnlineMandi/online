@@ -1,17 +1,21 @@
-<div class="row">
+<div class="row" ng-class="{'out-stock':product.rate_a=='' && product.rate_b==''}">
     <div class="col-50">
         <img ng-src="img/products/{{product.img}}" fallback-src="http://beta.onlinemandi.com/uploads/products/medium/{{product.img}}">
     </div>
     <div class="col-50">
         <h3>{{product.name}}</h3>
 
-        <p>Grade A<span><ion-rate ng-hide="product.rate_a==''">Rs.</ion-rate><out-of-stock ng-show="product.rate_a==''">Out of Stock</out-of-stock>{{product.rate_a}}</span></p>
-        <p>Grade B<span><ion-rate ng-hide="product.rate_b==''">Rs.</ion-rate><out-of-stock ng-show="product.rate_b==''">Out of Stock</out-of-stock>{{product.rate_b}}</span></p>
-        <p><button ng-hide="product.rates_a == undefined && product.rates_b == undefined" class="button button-small icon-right ion-btn" ng-click="showOffers(product)">View Offers</button>
-        <i ng-click="addToFav($event)" class="fav" ng-class="favClass"></i></p>
+        <span ng-hide="product.rate_a=='' && product.rate_b==''">
+            <p>Grade A<span><ion-rate ng-hide="product.rate_a==''">Rs.</ion-rate><out-of-stock ng-show="product.rate_a==''">Out of Stock</out-of-stock>{{product.rate_a}}/{{unit}}</span></p>
+            <p>Grade B<span><ion-rate ng-hide="product.rate_b==''">Rs.</ion-rate><out-of-stock ng-show="product.rate_b==''">Out of Stock</out-of-stock>{{product.rate_b}}/{{unit}}</span></p>
+            <p><button ng-hide="product.rates_a == undefined && product.rates_b == undefined" class="button button-small icon-right ion-btn" ng-click="showOffers(product)">View Offers</button>
+            <i ng-click="addToFav($event)" class="fav" ng-class="favClass"></i></p>
+        </span>
+        <span class="outoff" ng-show="product.rate_a=='' && product.rate_b==''">Out of Stock</span>
     </div>
+
 </div>
-<div class="row">
+<div class="row" ng-hide="product.rate_a=='' && product.rate_b==''">
     <div class="col-33">
         <label class="item item-input item-select item-custom-select">
             <div class="input-label">

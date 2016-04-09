@@ -542,22 +542,17 @@ function($rootScope, $state, $window, $ionicModal, $ionicHistory, $ionicPopup, A
             $rootScope.checkoutGrandTotal = $scope.grandTotal = $scope.cartTotal + $scope.shipping;
         };
     }])
-    .controller('OfflineCtrl', ['$scope', '$ionicPopover', 'UserFactory', function($scope, $ionicPopover, UserFactory) {
-
-    }])
-    .controller('AccountCtrl', ['$scope', '$ionicPopover', 'UserFactory', function($scope, $ionicPopover, UserFactory) {
-
-    }])
-    .controller('CheckoutCtrl', ['$rootScope','$scope', '$ionicHistory', 'CartFactory', 'AuthFactory', '$ionicPopover', '$location', 'UserFactory', function($rootScope, $scope, $ionicHistory, CartFactory, AuthFactory, $ionicPopover, $location, UserFactory) {
-       $scope.details = AuthFactory.getDetails();
-        $scope.clientSideList = [
-            { text: "Backbone", value: "bb" },
-            { text: "Angular", value: "ng" },
-            { text: "Ember", value: "em" },
-            { text: "Knockout", value: "ko" }
-        ];
+    .controller('CheckoutCtrl', ['$rootScope', 'Loader', '$scope', '$ionicHistory', 'CartFactory', 'AuthFactory', '$ionicPopover', '$location', 'UserFactory', function($rootScope, Loader, $scope, $ionicHistory, CartFactory, AuthFactory, $ionicPopover, $location, UserFactory) {
+        $scope.details = AuthFactory.getDetails();
+        $scope.haswallet = false;
+        $scope.creditlimit = 0;
         $scope.cartDetails = CartFactory.checkoutTotal();
-       $scope.subTotal = $scope.cartDetails.total;
+        Loader.showLoading('Loading....');
+        $scope.checkout =  function(){
+
+        };
+        $scope.cartTotal = $scope.cartDetails.gtotal;
+        $scope.subTotal = $scope.cartDetails.total;
         $scope.gotoCart = function(){
             $ionicHistory.nextViewOptions({
                 disableBack: true,
@@ -565,9 +560,60 @@ function($rootScope, $state, $window, $ionicModal, $ionicHistory, $ionicPopup, A
             });
             $location.path('/app/cart');
         };
-        $scope.placeOrder = function(){
+        $scope.methods = [
+            { text: "Cash on Delivery", value: 1, "amount":null, "msg": "", disable:false },
+            { text: "Onlinemandi Wallet", value: 2, "amount":0, "msg": "", disable:true }
+        ];
 
+        $scope.data = {
+            method: 1
         };
+        CartFactory.getwallet().success(function(data) {
+            $scope.wallet = data;
+            if($scope.wallet.status){
+                if($scope.wallet.credit-$scope.wallet.debit + $scope.wallet.limit  >= $scope.cartDetails.gtotal){
+                    if($scope.wallet.credit-$scope.wallet.debit < $scope.cartDetails.gtotal){
+                        $scope.data.method = 1;
+                    } else  {
+                        $scope.data.method = 2;
+                    }
+                    $scope.methods[1].disable = false;
+                } else {
+                    $scope.data.method = 1;
+                    $scope.methods[1].msg = "Your cart total has exceeded the wallet credit limit"
+                }
+                $scope.methods[1].amount = $scope.wallet.credit-$scope.wallet.debit;
+                $scope.creditlimit = $scope.wallet.credit-$scope.wallet.debit + $scope.wallet.limit;
+                $scope.haswallet = true;
+            } else {
+                $scope.methods[1].amount = null;
+            }
+            Loader.hideLoading();
+        }).error(function(err, statusCode) {
+            Loader.hideLoading();
+            Loader.toggleLoadingWithMessage(err.message);
+        });
+        $scope.getAlert = function(val){
+            if($scope.haswallet && val==2 && $scope.creditlimit < $scope.cartDetails.gtotal){
+                Loader.toggleLoadingWithMessage("Your cart total has exceeded your credit limit of ");
+            }
+        }
+
+        $scope.placeOrder = function(){
+            Loader.showLoading('Loading....');
+            CartFactory.placeOrder($scope.data.method).success(function(data) {
+                Loader.hideLoading();
+            }).error(function(err, statusCode) {
+                Loader.hideLoading();
+                Loader.toggleLoadingWithMessage(err.message);
+            });
+        };
+    }])
+    .controller('OfflineCtrl', ['$scope', '$ionicPopover', 'UserFactory', function($scope, $ionicPopover, UserFactory) {
+
+    }])
+    .controller('AccountCtrl', ['$scope', '$ionicPopover', 'UserFactory', function($scope, $ionicPopover, UserFactory) {
+
     }])
     .controller('TestCtrl', ['$scope', '$ionicPopover', 'UserFactory', function($scope, $ionicPopover, UserFactory) {
 

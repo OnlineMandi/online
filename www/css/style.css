@@ -130,6 +130,8 @@
     color: #000;
     font-size: 15px;
     text-transform: capitalize;
+    margin-top: 7px;
+    font-family: arial;
 }
 .pro-list .list .item p {
     color: #757575;
@@ -342,6 +344,7 @@
     margin-bottom: 1px;
     padding: 0 5px;
 	color:#000;
+    font-weight: bold;
 }
 .slideable_content .row .col {
     font-size: 13px;
@@ -615,7 +618,7 @@
 }
 
 .custom-popup .popup .popup-body h4 {
-    color: #000;
+    color: #EF473A;
     font-size: 14px;
     font-weight: bold;
     margin: 7px 0 10px;
@@ -695,3 +698,47 @@
 .logo a img {
     width: 100%;
 }
+
+.outoff{
+    color: #ef473a;
+    display: inline-block;
+    font-size: 16px;
+    font-weight: 500;
+    margin-top: 27px;
+}
+
+.out-stock {
+    position: relative;
+}
+.out-stock:before{
+    background: rgba(69, 0, 0, 0.21) none repeat scroll 0 0;
+    bottom: -10px;
+    content: "";
+    left: -10px;
+    position: absolute;
+    right: -10px;
+    top: -10px;
+
+}
+[ng-show="cartTotal"] a.button
+{
+    border-radius: 2px;
+    line-height: 30px;
+    min-height: 35px;
+}
+[ng-show="cartTotal"] div:last-child a.button{
+    float: right;
+}
+div.payments {
+    white-space: normal;
+    word-wrap: unset;
+    margin-right: -55px;
+    font-size: 13px;
+}
+.radio-content .item-content span{
+    font-size:90%;
+}
+.radio-content .item-content span.wallet-amount{
+    color:#ff0000
+}
+

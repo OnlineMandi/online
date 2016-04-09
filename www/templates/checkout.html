@@ -28,21 +28,22 @@
             </div>
         </div>
         <h3 class="upper-heading">Payment Method</h3>
-        <div class="list shadow drom-item bg-wt">
+        <div class="list">
+            <div class="item item-divider">{{ data.method }}</div>
 
-                <ion-list>
-                    <ion-radio ng-model="choice" ng-value="'A'">Cash On Delivery</ion-radio>
-                    <ion-radio ng-model="choice" ng-value="'B'">Wallet</ion-radio>
-                </ion-list>
-
+            <ion-radio class="w-link" ng-repeat="item in methods" ng-mousedown="getAlert(item.value)"
+                       ng-value="item.value"
+                       ng-disabled="item.disable"
+                       ng-model="data.method">
+                {{ item.text }}<span class="wallet-amount" ng-show="item.amount!=null"> ({{item.amount | currency : 'Rs.' : 2}})</span>
+            </ion-radio>
         </div>
-        <div class="row">
-            <div class="col-33">
+        <div class="row"   ng-show="cartTotal">
+            <div class="col-50">
                 <a class="button  button-assertive" ng-click="gotoCart()">Go to Cart</a>
             </div>
-            <div class="col-33"></div>
-            <div class="col-33">
-                <a class="button button-balanced" ng-click="checkout()">Place Order</a>
+            <div class="col-50">
+                <a class="button button-balanced" ng-click="placeOrder()">Place Order</a>
             </div>
         </div>
     </ion-content>

@@ -5,13 +5,13 @@
     </div>
 </div>
 <div ng-show="popupfruit.rates_a !=undefined" class="slideable_content">
-    <div class="row">
+    <div class="row heading">
         <div class="col text-left">	Quantity</div>
         <div class="col text-right">Rate</div>
     </div>
     <div ng-repeat="rates in rates_a" class="row">
         <div class="col text-left">{{rates.name}}</div>
-        <div class="col text-right">{{rates.value}}</div>
+        <div class="col text-right">{{rates.value | currency : 'Rs.' : 2}}/{{rates.unit}}</div>
     </div>
 </div>
 <h4>Grade B</h4>
@@ -27,7 +27,7 @@
     </div>
     <div ng-repeat="rates in rates_b" class="row">
         <div class="col text-left">{{rates.name}}</div>
-        <div class="col text-right">{{rates.value}}</div>
+        <div class="col text-right">{{rates.value | currency : 'Rs.' : 2}}/{{rates.unit}}</div>
     </div>
 </div>
 </div>
